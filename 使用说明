@@ -58,6 +58,12 @@ pip install -r requirements.txt
 4.配置项目
 修改config.yaml文件，配置本项目所需的各种参数。默认的LLM使用的是ChatGLMLLM，你需要配置密钥，才能启动。 默认的TTS使用的是EdgeTTS，这个无需配置，如果你需要更换成豆包TTS，则需要配置密钥。
 
+# 服务器基础配置(Basic server configuration)
+server:
+  # 服务器监听地址和端口(Server listening address and port)
+  ip: 0.0.0.0
+  port: 8000
+
 配置说明：这里是各个功能使用的默认组件，例如LLM默认使用ChatGLMLLM模型。如果需要切换模型，就是改对应的名称。
 
 本项目的默认配置仅是成本最低配置（glm-4-flash和EdgeTTS都是免费的），如果需要更优的更快的搭配，需要自己结合部署环境切换各组件的使用。
