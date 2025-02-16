@@ -1,21 +1,70 @@
-FROM python:3.9.21-slim
+# 第一阶段：前端构建
+FROM node:18 as frontend-builder
 
-ENV LC_ALL=zh_CN.UTF-8 \
-    LANG=zh_CN.UTF-8 \
-    LANGUAGE=zh_CN.UTF-8
+WORKDIR /app/ZhiKongTaiWeb
 
-# Replace single RUN commands with a single RUN command to reduce layers
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y libgomp1 libgl1-mesa-glx libglib2.0-0 \
-    && apt-get clean \
-    && apt-get autoremove -y
+COPY ZhiKongTaiWeb/package*.json ./
 
-# Set working directory
-WORKDIR /opt/xiaozhi-es32-server
+RUN npm install
 
-# Clean unnecessary files to reduce image size
-RUN pip install -r requirements.txt
-#
-## Start the application
-CMD ["python", "Application.py"]
+COPY ZhiKongTaiWeb .
+
+RUN npm run build
+
+# 第二阶段：构建Python依赖
+FROM python:3.10-slim as builder
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+# 使用清华源加速apt安装
+RUN rm -rf /etc/apt/sources.list.d/* && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    apt-get clean && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    libopus-dev \
+    ffmpeg && \
+    rm -rf /var/lib/apt/lists/*
+
+# 安装Python依赖到虚拟环境
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# 第三阶段：生产镜像
+FROM python:3.10-slim
+
+WORKDIR /opt/xiaozhi-esp32-server
+
+# 使用清华源加速apt安装
+RUN rm -rf /etc/apt/sources.list.d/* && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    echo "deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+    apt-get clean && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libopus0 \
+    ffmpeg && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# 从构建阶段复制虚拟环境和前端构建产物
+COPY --from=builder /opt/venv /opt/venv
+COPY --from=frontend-builder /app/ZhiKongTaiWeb/dist /opt/xiaozhi-esp32-server/manager/static
+
+# 设置虚拟环境路径
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 复制应用代码
+COPY . .
+
+# 启动应用
+CMD ["python", "app.py"]

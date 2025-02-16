@@ -12,8 +12,11 @@ async def handleTextMessage(conn, message):
     logger.info(f"收到文本消息：{message}")
     try:
         msg_json = json.loads(message)
+        if isinstance(msg_json, int):
+            await conn.websocket.send(message)
+            return
         if msg_json["type"] == "hello":
-            await handleHelloMessage(conn, "你好")
+            await handleHelloMessage(conn)
         elif msg_json["type"] == "abort":
             await handleAbortMessage(conn)
         elif msg_json["type"] == "listen":
@@ -33,5 +36,4 @@ async def handleTextMessage(conn, message):
                 if "text" in msg_json:
                     await startToChat(conn, msg_json["text"])
     except json.JSONDecodeError:
-        await handleTextMessage(conn, message)
-    await conn.websocket.send(message)
+        await conn.websocket.send(message)

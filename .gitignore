@@ -139,3 +139,7 @@ cython_debug/
 *.iml
 model.pt
 tmp
+.DS_Store
+.config.yaml
+.secrets.yaml
+.private_config.yaml
