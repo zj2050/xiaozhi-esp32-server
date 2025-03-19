@@ -3,9 +3,5 @@ __pycache__
 *.pyc
 .env
 Dockerfile
-docs/
 tmp/
 data/
-LICENSE
-README.md
-README_en.md
