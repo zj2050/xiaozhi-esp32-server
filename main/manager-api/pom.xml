@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
-        <junit.version>5.12.0</junit.version>
+        <junit.version>5.10.1</junit.version>
         <druid.version>1.2.20</druid.version>
         <mybatisplus.version>3.5.5</mybatisplus.version>
         <hutool.version>5.8.24</hutool.version>
@@ -27,8 +27,9 @@
         <shiro.version>2.0.2</shiro.version>
         <captcha.version>1.6.2</captcha.version>
         <guava.version>33.0.0-jre</guava.version>
-        <easyexcel.version>3.3.2</easyexcel.version>
         <liquibase-core.version>4.20.0</liquibase-core.version>
+        <aliyun-sms-version>4.1.0</aliyun-sms-version>
+        <okio-version>3.4.0</okio-version>
     </properties>
 
     <dependencies>
@@ -38,6 +39,7 @@
             <classifier>jakarta</classifier>
             <version>${shiro.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
@@ -86,6 +88,36 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.10.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>1.10.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
+            <version>1.10.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -167,6 +199,22 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <!-- 阿里云短信sdk -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
+            <version>${aliyun-sms-version}</version>
+        </dependency>
+        <!-- 阿里云短信sdk使用的okio:1.15.0版本有安全漏洞：GHSA-w33c-445m-f8w7 现在升级成3.4.0安全版本-->
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio</artifactId>
+            <version>${okio-version}</version>
         </dependency>
     </dependencies>
 

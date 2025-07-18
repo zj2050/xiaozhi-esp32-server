@@ -1,83 +1,158 @@
-from config.logger import setup_logging
 import json
 import asyncio
 import time
-from core.utils.util import remove_punctuation_and_length, get_string_no_punctuation_or_emoji
+from core.providers.tts.dto.dto import SentenceType
+from core.utils.util import get_string_no_punctuation_or_emoji, analyze_emotion
+from loguru import logger
 
 TAG = __name__
-logger = setup_logging()
 
-async def sendAudioMessage(conn, audios, text, text_index=0):
+emoji_map = {
+    "neutral": "😶",
+    "happy": "🙂",
+    "laughing": "😆",
+    "funny": "😂",
+    "sad": "😔",
+    "angry": "😠",
+    "crying": "😭",
+    "loving": "😍",
+    "embarrassed": "😳",
+    "surprised": "😲",
+    "shocked": "😱",
+    "thinking": "🤔",
+    "winking": "😉",
+    "cool": "😎",
+    "relaxed": "😌",
+    "delicious": "🤤",
+    "kissy": "😘",
+    "confident": "😏",
+    "sleepy": "😴",
+    "silly": "😜",
+    "confused": "🙄",
+}
+
+
+async def sendAudioMessage(conn, sentenceType, audios, text):
     # 发送句子开始消息
-    if text_index == conn.tts_first_text_index:
-        logger.bind(tag=TAG).info(f"发送第一段语音: {text}")
+    conn.logger.bind(tag=TAG).info(f"发送音频消息: {sentenceType}, {text}")
+    if text is not None:
+        emotion = analyze_emotion(text)
+        emoji = emoji_map.get(emotion, "🙂")  # 默认使用笑脸
+        await conn.websocket.send(
+            json.dumps(
+                {
+                    "type": "llm",
+                    "text": emoji,
+                    "emotion": emotion,
+                    "session_id": conn.session_id,
+                }
+            )
+        )
+    pre_buffer = False
+    if conn.tts.tts_audio_first_sentence and text is not None:
+        conn.logger.bind(tag=TAG).info(f"发送第一段语音: {text}")
+        conn.tts.tts_audio_first_sentence = False
+        pre_buffer = True
+
     await send_tts_message(conn, "sentence_start", text)
 
+    await sendAudio(conn, audios, pre_buffer)
+
+    await send_tts_message(conn, "sentence_end", text)
+
+    # 发送结束消息（如果是最后一个文本）
+    if conn.llm_finish_task and sentenceType == SentenceType.LAST:
+        await send_tts_message(conn, "stop", None)
+        conn.client_is_speaking = False
+        if conn.close_after_chat:
+            await conn.close()
+
+
+# 播放音频
+async def sendAudio(conn, audios, pre_buffer=True):
+    if audios is None or len(audios) == 0:
+        return
     # 流控参数优化
-    original_frame_duration = 60  # 原始帧时长（毫秒）
-    adjusted_frame_duration = int(original_frame_duration * 0.8)  # 缩短20%
-    total_frames = len(audios)  # 获取总帧数
-    compensation = total_frames * (original_frame_duration - adjusted_frame_duration) / 1000  # 补偿时间（秒）
-
+    frame_duration = 60  # 帧时长（毫秒），匹配 Opus 编码
     start_time = time.perf_counter()
-    play_position = 0  # 已播放时长（毫秒）
+    play_position = 0
 
-    for opus_packet in audios:
+    # 仅当第一句话时执行预缓冲
+    if pre_buffer:
+        pre_buffer_frames = min(3, len(audios))
+        for i in range(pre_buffer_frames):
+            await conn.websocket.send(audios[i])
+        remaining_audios = audios[pre_buffer_frames:]
+    else:
+        remaining_audios = audios
+
+    # 播放剩余音频帧
+    for opus_packet in remaining_audios:
         if conn.client_abort:
-            return
+            break
 
-        # 计算带加速因子的预期时间
+        # 重置没有声音的状态
+        conn.last_activity_time = time.time() * 1000
+
+        # 计算预期发送时间
         expected_time = start_time + (play_position / 1000)
         current_time = time.perf_counter()
-
-        # 流控等待（使用加速后的帧时长）
         delay = expected_time - current_time
         if delay > 0:
             await asyncio.sleep(delay)
 
         await conn.websocket.send(opus_packet)
-        play_position += adjusted_frame_duration  # 使用调整后的帧时长
 
-    # 补偿因加速损失的时长
-    if compensation > 0:
-        await asyncio.sleep(compensation)
+        play_position += frame_duration
 
-    await send_tts_message(conn, "sentence_end", text)
-
-    # 发送结束消息（如果是最后一个文本）
-    if conn.llm_finish_task and text_index == conn.tts_last_text_index:
-        await send_tts_message(conn, 'stop', None)
-        if conn.close_after_chat:
-            await conn.close()
 
 async def send_tts_message(conn, state, text=None):
     """发送 TTS 状态消息"""
-    message = {
-        "type": "tts",
-        "state": state,
-        "session_id": conn.session_id
-    }
+    message = {"type": "tts", "state": state, "session_id": conn.session_id}
     if text is not None:
         message["text"] = text
 
-    await conn.websocket.send(json.dumps(message))
+    # TTS播放结束
     if state == "stop":
+        # 播放提示音
+        tts_notify = conn.config.get("enable_stop_tts_notify", False)
+        if tts_notify:
+            stop_tts_notify_voice = conn.config.get(
+                "stop_tts_notify_voice", "config/assets/tts_notify.mp3"
+            )
+            audios, _ = conn.tts.audio_to_opus_data(stop_tts_notify_voice)
+            await sendAudio(conn, audios)
+        # 清除服务端讲话状态
         conn.clearSpeakStatus()
+
+    # 发送消息到客户端
+    await conn.websocket.send(json.dumps(message))
 
 
 async def send_stt_message(conn, text):
+    end_prompt_str = conn.config.get("end_prompt", {}).get("prompt")
+    if end_prompt_str and end_prompt_str == text:
+        await send_tts_message(conn, "start")
+        return
+
     """发送 STT 状态消息"""
-    stt_text = get_string_no_punctuation_or_emoji(text)
-    await conn.websocket.send(json.dumps({
-        "type": "stt",
-        "text": stt_text,
-        "session_id": conn.session_id}
-    ))
+    
+    # 解析JSON格式，提取实际的用户说话内容
+    display_text = text
+    try:
+        # 尝试解析JSON格式
+        if text.strip().startswith('{') and text.strip().endswith('}'):
+            parsed_data = json.loads(text)
+            if isinstance(parsed_data, dict) and "content" in parsed_data:
+                # 如果是包含说话人信息的JSON格式，只显示content部分
+                display_text = parsed_data["content"]
+    except (json.JSONDecodeError, TypeError):
+        # 如果不是JSON格式，直接使用原始文本
+        display_text = text
+    
+    stt_text = get_string_no_punctuation_or_emoji(display_text)
     await conn.websocket.send(
-        json.dumps({
-            "type": "llm",
-            "text": "😊",
-            "emotion": "happy",
-            "session_id": conn.session_id}
-        ))
+        json.dumps({"type": "stt", "text": stt_text, "session_id": conn.session_id})
+    )
+    conn.client_is_speaking = True
     await send_tts_message(conn, "start")

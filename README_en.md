@@ -1,8 +1,27 @@
+[![Banners](docs/images/banner1.png)](https://github.com/xinnan-tech/xiaozhi-esp32-server)
 
-[![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=Hello😃,%20XiaoZhi📟&text2=Open%20Source%20XiaoZhi%20ESP-32%20Backend%20Service&width=830&height=210)](https://github.com/xinnan-tech/xiaozhi-esp32-server)
+<h1 align="center">Xiaozhi Backend Service xiaozhi-esp32-server</h1>
+
 <p align="center">
+This project is based on human-machine symbiotic intelligence theory and technology to develop intelligent terminal hardware and software systems<br/>providing backend services for the open-source intelligent hardware project
+<a href="https://github.com/78/xiaozhi-esp32">xiaozhi-esp32</a><br/>
+Implemented using Python, Java, and Vue according to the <a href="https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh">Xiaozhi Communication Protocol</a><br/>
+Supports MCP endpoints and voiceprint recognition
+</p>
+
+<p align="center">
+<a href="./README.md">中文</a>
+· <a href="./docs/FAQ.md">FAQ</a>
+· <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/issues">Report Issues</a>
+· <a href="./README.md#%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3">Deployment Docs</a>
+· <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/releases">Release Notes</a>
+</p>
+<p align="center">
+  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/releases">
+    <img alt="GitHub Contributors" src="https://img.shields.io/github/v/release/xinnan-tech/xiaozhi-esp32-server?logo=docker" />
+  </a>
   <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/graphs/contributors">
-    <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/xinnan-tech/xiaozhi-esp32-server" />
+    <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/xinnan-tech/xiaozhi-esp32-server?logo=github" />
   </a>
   <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/issues">
     <img alt="Issues" src="https://img.shields.io/github/issues/xinnan-tech/xiaozhi-esp32-server?color=0088ff" />
@@ -10,284 +29,336 @@
   <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/pulls">
     <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/xinnan-tech/xiaozhi-esp32-server?color=0088ff" />
   </a>
+  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/LICENSE">
+    <img alt="GitHub pull requests" src="https://img.shields.io/badge/license-MIT-white?labelColor=black" />
+  </a>
+  <a href="https://github.com/xinnan-tech/xiaozhi-esp32-server">
+    <img alt="stars" src="https://img.shields.io/github/stars/xinnan-tech/xiaozhi-esp32-server?color=ffcb47&labelColor=black" />
+  </a>
 </p>
 
-# XiaoZhi ESP-32 Backend Service (xiaozhi-esp32-server)
-
-([中文](README.md) | English)
-
-This project provides the backend service for the open source smart hardware project [xiaozhi-esp32](https://github.com/78/xiaozhi-esp32). It is implemented in `Python` based on the [XiaoZhi Communication Protocol](https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh).
+<p align="center">
+By Professor Siyuan Liu Research and Development Group (South China University of Technology)
+</br>
+刘思源教授团队研发（华南理工大学）
+</br>
+<img src="./docs/images/hnlg.jpg" alt="South China University of Technology" width="50%">
+</p>
 
 ---
 
-## Target Audience 👥
+## Target Users 👥
 
-This project is designed to be used in conjunction with ESP32 hardware devices. If you have already purchased an ESP32 device, successfully connected to the backend service deployed by XieGe, and now wish to set up your own `xiaozhi-esp32` backend service, then this project is perfect for you.
+This project requires ESP32 hardware devices to work. If you have purchased ESP32-related hardware, successfully connected to Brother Xia's deployed backend service, and want to build your own `xiaozhi-esp32` backend service independently, then this project is perfect for you.
 
-Want to see it in action? Check out the videos 🎥
+Want to see the usage effects? Click the videos below 🎥
 
 <table>
   <tr>
     <td>
-      <a href="https://www.bilibili.com/video/BV1FMFyejExX" target="_blank">
-        <picture>
-          <img alt="XiaoZhi ESP32 connecting to a custom backend model" src="docs/images/demo1.png" />
-        </picture>
-      </a>
+        <a href="https://www.bilibili.com/video/BV1FMFyejExX" target="_blank">
+         <picture>
+           <img alt="Xiaozhi ESP32 connecting to own backend model" src="docs/images/demo1.png" />
+         </picture>
+        </a>
     </td>
     <td>
-      <a href="https://www.bilibili.com/video/BV1CDKWemEU6" target="_blank">
-        <picture>
-          <img alt="Custom Voice" src="docs/images/demo2.png" />
-        </picture>
-      </a>
+        <a href="https://www.bilibili.com/video/BV1CDKWemEU6" target="_blank">
+         <picture>
+           <img alt="Custom voice timbre" src="docs/images/demo2.png" />
+         </picture>
+        </a>
     </td>
     <td>
-      <a href="https://www.bilibili.com/video/BV12yA2egEaC" target="_blank">
-        <picture>
-          <img alt="Conversing in Cantonese" src="docs/images/demo3.png" />
-        </picture>
-      </a>
+        <a href="https://www.bilibili.com/video/BV12yA2egEaC" target="_blank">
+         <picture>
+           <img alt="Using Cantonese for communication" src="docs/images/demo3.png" />
+         </picture>
+        </a>
     </td>
     <td>
-      <a href="https://www.bilibili.com/video/av114036381327149" target="_blank">
-        <picture>
-          <img alt="Control Home Appliances" src="docs/images/demo5.png" />
-        </picture>
-      </a>
+        <a href="https://www.bilibili.com/video/BV1pNXWYGEx1" target="_blank">
+         <picture>
+           <img alt="Controlling home appliances" src="docs/images/demo5.png" />
+         </picture>
+        </a>
     </td>
     <td>
-      <a href="https://www.bilibili.com/video/BV1kgA2eYEQ9" target="_blank">
-        <picture>
-          <img alt="Lowest Cost Configuration" src="docs/images/demo4.png" />
-        </picture>
-      </a>
+        <a href="https://www.bilibili.com/video/BV1kgA2eYEQ9" target="_blank">
+         <picture>
+           <img alt="Lowest cost configuration" src="docs/images/demo4.png" />
+         </picture>
+        </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <a href="https://www.bilibili.com/video/BV1Vy96YCE3R" target="_blank">
+         <picture>
+           <img alt="Custom voice timbre" src="docs/images/demo6.png" />
+         </picture>
+        </a>
     </td>
     <td>
+        <a href="https://www.bilibili.com/video/BV1VC96Y5EMH" target="_blank">
+         <picture>
+           <img alt="Playing music" src="docs/images/demo7.png" />
+         </picture>
+        </a>
+    </td>
+    <td>
+        <a href="https://www.bilibili.com/video/BV1Z8XuYZEAS" target="_blank">
+         <picture>
+           <img alt="Weather plugin" src="docs/images/demo8.png" />
+         </picture>
+        </a>
+    </td>
+    <td>
+        <a href="https://www.bilibili.com/video/BV178XuYfEpi" target="_blank">
+         <picture>
+           <img alt="IOT command control devices" src="docs/images/demo9.png" />
+         </picture>
+        </a>
+    </td>
+    <td>
+        <a href="https://www.bilibili.com/video/BV17LXWYvENb" target="_blank">
+         <picture>
+           <img alt="News broadcasting" src="docs/images/demo0.png" />
+         </picture>
+        </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.bilibili.com/video/BV12J7WzBEaH" target="_blank">
+         <picture>
+           <img alt="Real-time interruption" src="docs/images/demo10.png" />
+         </picture>
+        </a>
+    </td>
+    <td>
+      <a href="https://www.bilibili.com/video/BV1Co76z7EvK" target="_blank">
+         <picture>
+           <img alt="Photo recognition of objects" src="docs/images/demo12.png" />
+         </picture>
+        </a>
+    </td>
+    <td>
+      <a href="https://www.bilibili.com/video/BV1TJ7WzzEo6" target="_blank">
+         <picture>
+           <img alt="Multi-command tasks" src="docs/images/demo11.png" />
+         </picture>
+        </a>
+    </td>
+    <td>
+        <a href="https://www.bilibili.com/video/BV1ZQKUzYExM" target="_blank">
+         <picture>
+           <img alt="MCP endpoint" src="docs/images/demo13.png" />
+         </picture>
+        </a>
+    </td>
+    <td>
+        <a href="https://www.bilibili.com/video/BV1Exu3zqEDe" target="_blank">
+         <picture>
+           <img alt="Voiceprint recognition" src="docs/images/demo14.png" />
+         </picture>
+        </a>
     </td>
   </tr>
 </table>
 
 ---
 
-## System Requirements and Deployment Prerequisites 🖥️
+## Warnings ⚠️
 
-- **Hardware**: A set of devices compatible with `xiaozhi-esp32` (for specific models, please refer to [this link](https://rcnv1t9vps13.feishu.cn/wiki/DdgIw4BUgivWDPkhMj1cGIYCnRf)).
-- **Server**: A computer with at least a 4-core CPU and 8GB of memory.
-- **Firmware Compilation**: Please update the backend service API endpoint in the `xiaozhi-esp32` project, then recompile the firmware and flash it to your device.
+1. This project is open-source software. This software has no commercial partnership with any third-party API service providers (including but not limited to speech recognition, large models, speech synthesis, and other platforms) that it interfaces with, and does not provide any form of guarantee for their service quality or financial security. It is recommended that users prioritize service providers with relevant business licenses and carefully read their service agreements and privacy policies. This software does not host any account keys, does not participate in fund flows, and does not bear the risk of recharge fund losses.
+
+2. The functionality of this project is not complete and has not passed network security assessment. Please do not use it in production environments. If you deploy this project for learning purposes in a public network environment, please ensure necessary protection measures are in place.
 
 ---
 
-## Warning ⚠️
+## Deployment Documentation
 
-This project is relatively new and has not yet undergone network security evaluations. **Do not use it in a production environment.**
+![Banners](docs/images/banner2.png)
 
-If you deploy this project on a public network for learning purposes, be sure to enable protection in the configuration file `config.yaml`:
+This project provides two deployment methods. Please choose based on your specific needs:
 
-```yaml
-server:
-  auth:
-    # Enable protection
-    enabled: true  
+#### 🚀 Deployment Method Selection
+| Deployment Method | Features | Applicable Scenarios | Deployment Docs | Configuration Requirements | Video Tutorials | 
+|---------|------|---------|---------|---------|---------|
+| **Simplified Installation** | Intelligent dialogue, IOT, MCP, visual perception | Low-configuration environments, data stored in config files, no database required | [①Docker Version](./docs/Deployment.md#%E6%96%B9%E5%BC%8F%E4%B8%80docker%E5%8F%AA%E8%BF%90%E8%A1%8Cserver) / [②Source Code Deployment](./docs/Deployment.md#%E6%96%B9%E5%BC%8F%E4%BA%8C%E6%9C%AC%E5%9C%B0%E6%BA%90%E7%A0%81%E5%8F%AA%E8%BF%90%E8%A1%8Cserver)| 2 cores 4GB if using `FunASR`, 2 cores 2GB if all APIs | - | 
+| **Full Module Installation** | Intelligent dialogue, IOT, MCP endpoints, voiceprint recognition, visual perception, OTA, intelligent control console | Complete functionality experience, data stored in database |[①Docker Version](./docs/Deployment_all.md#%E6%96%B9%E5%BC%8F%E4%B8%80docker%E8%BF%90%E8%A1%8C%E5%85%A8%E6%A8%A1%E5%9D%97) / [②Source Code Deployment](./docs/Deployment_all.md#%E6%96%B9%E5%BC%8F%E4%BA%8C%E6%9C%AC%E5%9C%B0%E6%BA%90%E7%A0%81%E8%BF%90%E8%A1%8C%E5%85%A8%E6%A8%A1%E5%9D%97) / [③Source Code Deployment Auto-Update Tutorial](./docs/dev-ops-integration.md) | 4 cores 8GB if using `FunASR`, 2 cores 4GB if all APIs| [Local Source Code Startup Video Tutorial](https://www.bilibili.com/video/BV1wBJhz4Ewe) | 
+
+
+> 💡 Note: Below is a test platform deployed with the latest code. You can burn and test if needed. Concurrent users: 6, data will be cleared daily.
+
+```
+Intelligent Control Console Address: https://2662r3426b.vicp.fun
+
+Service Test Tool: https://2662r3426b.vicp.fun/test/
+OTA Interface Address: https://2662r3426b.vicp.fun/xiaozhi/ota/
+Websocket Interface Address: wss://2662r3426b.vicp.fun/xiaozhi/v1/
 ```
 
-Once protection is enabled, you will need to validate the machine's token or MAC address based on your actual situation. Please refer to the configuration documentation for details.
+#### 🚩 Configuration Description and Recommendations
+> [!Note]
+> This project provides two configuration schemes:
+> 
+> 1. `Entry Level Free Settings`: Suitable for personal and home use, all components use free solutions, no additional payment required.
+> 
+> 2. `Streaming Configuration`: Suitable for demonstrations, training, scenarios with more than 2 concurrent users, etc. Uses streaming processing technology for faster response speed and better experience.
+> 
+> Starting from version `0.5.2`, the project supports streaming configuration. Compared to earlier versions, response speed is improved by approximately `2.5 seconds`, significantly improving user experience.
+
+| Module Name | Entry Level Free Settings | Streaming Configuration |
+|:---:|:---:|:---:|
+| ASR(Speech Recognition) | FunASR(Local) | 👍FunASRServer or 👍DoubaoStreamASR |
+| LLM(Large Model) | ChatGLMLLM(Zhipu glm-4-flash) | 👍DoubaoLLM(Volcano doubao-1-5-pro-32k-250115) |
+| VLLM(Vision Large Model) | ChatGLMVLLM(Zhipu glm-4v-flash) | 👍QwenVLVLLM(Qwen qwen2.5-vl-3b-instructh) |
+| TTS(Speech Synthesis) | ✅LinkeraiTTS(Lingxi streaming) | 👍HuoshanDoubleStreamTTS(Volcano dual-stream speech synthesis) |
+| Intent(Intent Recognition) | function_call(Function calling) | function_call(Function calling) |
+| Memory(Memory function) | mem_local_short(Local short-term memory) | mem_local_short(Local short-term memory) |
+
+#### 🔧 Testing Tools
+This project provides the following testing tools to help you verify the system and choose suitable models:
+
+| Tool Name | Location | Usage Method | Function Description |
+|:---:|:---|:---:|:---:|
+| Audio Interaction Test Tool | main》xiaozhi-server》test》test_page.html | Open directly with Google Chrome | Tests audio playback and reception functions, verifies if Python-side audio processing is normal |
+| Model Response Test Tool 1 | main》xiaozhi-server》performance_tester.py | Execute `python performance_tester.py` | Tests response speed of three core modules: ASR(speech recognition), LLM(large model), TTS(speech synthesis) |
+| Model Response Test Tool 2 | main》xiaozhi-server》performance_tester_vllm.py | Execute `python performance_tester_vllm.py` | Tests VLLM(vision model) response speed |
+
+> 💡 Note: When testing model speed, only models with configured keys will be tested.
 
 ---
-
 ## Feature List ✨
-
 ### Implemented ✅
 
-- **Communication Protocol**  
-  Based on the `xiaozhi-esp32` protocol, data exchange is implemented via WebSocket.
-- **Dialogue Interaction**  
-  Supports wake-up dialogues, manual conversations, and real-time interruptions. Automatically enters sleep mode after long periods of inactivity.
-- **Multilingual Recognition**  
-  Supports Mandarin, Cantonese, English, Japanese, and Korean (default using FunASR).
-- **LLM Module**  
-  Allows flexible switching of LLM modules. The default is ChatGLMLLM, with options to use AliLLM, DeepSeek, Ollama, and others.
-- **TTS Module**  
-  Supports multiple TTS interfaces including EdgeTTS (default) and Volcano Engine Doubao TTS to meet speech synthesis requirements.
+| Feature Module | Description |
+|:---:|:---|
+| Core Architecture | Based on WebSocket and HTTP servers, provides complete console management and authentication system |
+| Voice Interaction | Supports streaming ASR(speech recognition), streaming TTS(speech synthesis), VAD(voice activity detection), supports multi-language recognition and voice processing |
+| Voiceprint Recognition | Supports multi-user voiceprint registration, management, and recognition, processes in parallel with ASR, real-time speaker identity recognition and passes to LLM for personalized responses |
+| Intelligent Dialogue | Supports multiple LLM(large language models), implements intelligent dialogue |
+| Visual Perception | Supports multiple VLLM(vision large models), implements multimodal interaction |
+| Intent Recognition | Supports LLM intent recognition, Function Call function calling, provides plugin-based intent processing mechanism |
+| Memory System | Supports local short-term memory, mem0ai interface memory, with memory summarization functionality |
+| Tool Calling | Supports client IOT protocol, client MCP protocol, server MCP protocol, MCP endpoint protocol, custom tool functions |
+| Management Backend | Provides Web management interface, supports user management, system configuration, and device management |
+| Testing Tools | Provides performance testing tools, vision model testing tools, and audio interaction testing tools |
+| Deployment Support | Supports Docker deployment and local deployment, provides complete configuration file management |
+| Plugin System | Supports functional plugin extensions, custom plugin development, and plugin hot-loading |
 
-### In Development 🚧
+### Under Development 🚧
 
-- Conversation Memory Feature
-- Multiple Mood Modes
-- Smart Control Panel Web UI
+To learn about specific development plan progress, [click here](https://github.com/users/xinnan-tech/projects/3)
 
-![Screenshot](docs/images/webui.png)
-
----
-
-## Supported Platforms/Components 📋
-
-### LLM
-
-| Type |         Platform Name         |         Usage Method          |   Pricing Model   |                                 Remarks                                  |
-|:----:|:-----------------------------:|:-----------------------------:|:-----------------:|:-------------------------------------------------------------------------:|
-| LLM  |   AliLLM (阿里百炼)           | OpenAI API call               | Token consumption | [Click to apply for API key](https://bailian.console.aliyun.com/?apiKey=1#/api-key) |
-| LLM  | DeepSeekLLM (深度求索)        | OpenAI API call               | Token consumption |          [Click to apply for API key](https://platform.deepseek.com/)         |
-| LLM  | ChatGLMLLM (智谱)             | OpenAI API call               | Free              | Although free, you still need to [click to apply for an API key](https://bigmodel.cn/usercenter/proj-mgmt/apikeys) |
-| LLM  | OllamaLLM                   | Ollama API call               | Free/Custom       | Requires pre-downloading the model (`ollama pull`); service URL: `http://localhost:11434` |
-| LLM  | DifyLLM                     | Dify API call                 | Token consumption | For local deployment. Note that prompt configuration must be set in the Dify console. |
-| LLM  | GeminiLLM                   | Gemini API call               | Free              | [Click to apply for API key](https://aistudio.google.com/apikey) |
-| LLM  | CozeLLM                     | Coze API call                 | Token consumption | Requires providing bot_id, user_id, and personal token. |
-| LLM  | Home Assistant              | Home Assistant voice assistant API call | Free       | Requires providing a Home Assistant token. |
-
-In fact, any LLM that supports OpenAI API calls can be integrated.
+If you are a software developer, here is an [Open Letter to Developers](docs/contributor_open_letter.md). Welcome to join!
 
 ---
 
-### TTS
+## Product Ecosystem 👬
+Xiaozhi is an ecosystem. When using this product, you can also check out other excellent projects in this ecosystem
 
-| Type |             Platform Name              | Usage Method |   Pricing Model   |                                       Remarks                                        |
-|:----:|:--------------------------------------:|:------------:|:-----------------:|:--------------------------------------------------------------------------------------:|
-| TTS  |               EdgeTTS                  | API call     | Free              | Default TTS based on Microsoft's speech synthesis technology.                        |
-| TTS  | DoubaoTTS (火山引擎豆包 TTS)             | API call     | Token consumption | [Click to create an API key](https://console.volcengine.com/speech/service/8); it is recommended to use the paid version for higher concurrency. |
-| TTS  | CosyVoiceSiliconflow                   | API call     | Token consumption | Requires application for the Siliconflow API key; output format is WAV.                |
-| TTS  | CozeCnTTS                              | API call     | Token consumption | Requires providing a Coze API key; output format is WAV.                               |
-| TTS  | FishSpeech                             | API call     | Free/Custom       | Starts a local TTS service; see the configuration file for startup instructions.       |
-| TTS  | GPT_SOVITS_V2                          | API call     | Free/Custom       | Starts a local TTS service, suitable for personalized speech synthesis scenarios.      |
+| Project Name | Project Address | Project Description |
+|:---------------------|:--------|:--------|
+| Xiaozhi Android Client | [xiaozhi-android-client](https://github.com/TOM88812/xiaozhi-android-client) | An Android and iOS voice dialogue application based on xiaozhi-server, supporting real-time voice interaction and text dialogue.<br/>Currently a Flutter version, connecting iOS and Android platforms. |
+| Xiaozhi Desktop Client | [py-xiaozhi](https://github.com/Huang-junsen/py-xiaozhi) | This project provides a Python-based AI client for beginners, allowing users to experience Xiaozhi AI functionality through code even without physical hardware conditions. |
+| Xiaozhi Java Server | [xiaozhi-esp32-server-java](https://github.com/joey-zhou/xiaozhi-esp32-server-java) | Xiaozhi open-source backend service Java version is a Java-based open-source project.<br/>It includes frontend and backend services, aiming to provide users with a complete backend service solution. |
 
 ---
 
-### VAD
+## Supported Platforms/Components List 📋
 
-| Type |    Platform Name    | Usage Method | Pricing Model | Remarks |
-|:----:|:-------------------:|:------------:|:-------------:|:-------:|
-| VAD  | SileroVAD           | Local        | Free          |         |
+### LLM Language Models
 
----
+| Usage Method | Supported Platforms | Free Platforms |
+|:---:|:---:|:---:|
+| OpenAI interface calls | Alibaba Bailian, Volcano Engine Doubao, DeepSeek, Zhipu ChatGLM, Gemini | Zhipu ChatGLM, Gemini |
+| Ollama interface calls | Ollama | - |
+| Dify interface calls | Dify | - |
+| FastGPT interface calls | FastGPT | - |
+| Coze interface calls | Coze | - |
 
-### ASR
-
-| Type |    Platform Name    | Usage Method | Pricing Model | Remarks |
-|:----:|:-------------------:|:------------:|:-------------:|:-------:|
-| ASR  | FunASR              | Local        | Free          |         |
-| ASR  | DoubaoASR           | API call     | Paid          |         |
-
----
-
-## Usage 🚀
-
-### 1. [Deployment Documentation](./docs/Deployment.md)
-
-This project supports three deployment methods. Choose the one that best fits your needs.
-
-The documentation provided here is a **written tutorial**. If you prefer a **video tutorial**, you can refer to [this expert's hands-on guide](https://www.bilibili.com/video/BV1gePuejEvT).
-
-Combining both the written and video tutorials can help you get started more quickly.
-
-1. [Docker Quick Deployment](./docs/Deployment.md)  
-   Suitable for general users who want a quick experience without extensive environment configuration. The only downside is that pulling the image can be a bit slow.
-
-2. [Deployment Using Docker Environment](./docs/Deployment.md#%E6%96%B9%E5%BC%8F%E4%BA%8C%E5%80%9F%E5%8A%A9docker%E7%8E%AF%E5%A2%83%E8%BF%90%E8%A1%8C%E9%83%A8%E7%BD%B2)  
-   Ideal for software engineers who already have Docker installed and wish to customize the code.
-
-3. [Running from Local Source Code](./docs/Deployment.md#%E6%96%B9%E5%BC%8F%E4%B8%89%E6%9C%AC%E5%9C%B0%E6%BA%90%E7%A0%81%E8%BF%90%E8%A1%8C)  
-   Suitable for users familiar with the `Conda` environment or those who wish to build the runtime environment from scratch.
-
-For scenarios requiring higher response speeds, running from the local source code is recommended to reduce additional overhead.
-
-### 2. [Firmware Compilation](./docs/firmware-build.md)
-
-Click [here](./docs/firmware-build.md) for a detailed guide on firmware compilation.
-
-After successful compilation and network connection, wake up XiaoZhi using the wake-up word and monitor the server console for output.
+In fact, any LLM that supports OpenAI interface calls can be integrated and used.
 
 ---
 
-## Frequently Asked Questions ❓
+### VLLM Vision Models
 
-### 1. TTS often fails and times out ⏰
+| Usage Method | Supported Platforms | Free Platforms |
+|:---:|:---:|:---:|
+| OpenAI interface calls | Alibaba Bailian, Zhipu ChatGLMVLLM | Zhipu ChatGLMVLLM |
 
-**Suggestion:**  
-If `EdgeTTS` frequently fails, please first check whether you are using a proxy (VPN). If so, try disabling the proxy and try again. If you are using Volcano Engine Doubao TTS and it often fails, it is recommended to use the paid version since the trial only supports 2 concurrent requests.
-
-### 2. I want to control lights, air conditioners, remote power on/off, etc. with XiaoZhi 💡
-
-**Suggestion:**  
-Set the `LLM` to `HomeAssistant` in the configuration file and use the `HomeAssistant` API to perform the relevant controls.
-
-### 3. I speak slowly, and XiaoZhi always interrupts during pauses 🗣️
-
-**Suggestion:**  
-Locate the following section in the configuration file and increase the value of `min_silence_duration_ms` (for example, change it to `1000`):
-
-```yaml
-VAD:
-  SileroVAD:
-    threshold: 0.5
-    model_dir: models/snakers4_silero-vad
-    min_silence_duration_ms: 700  # If your pauses are longer, increase this value
-```
-
-### 4. Why does XiaoZhi recognize a lot of Korean, Japanese, and English in what I say? 🇰🇷
-
-**Suggestion:**  
-Check whether the `model.pt` file exists in the `models/SenseVoiceSmall` directory. If it does not, please download it. See [Download ASR Model Files](docs/Deployment.md#模型文件) for details.
-
-### 5. Why does the error “TTS task error: file does not exist” occur? 📁
-
-**Suggestion:**  
-Verify that you have correctly installed the `libopus` and `ffmpeg` libraries using `conda`. If not, install them using:
-
-```
-conda install conda-forge::libopus
-conda install conda-forge::ffmpeg
-```
-
-### 6. How can I improve XiaoZhi's dialogue response speed? ⚡
-
-The default configuration of this project is designed to be cost-effective. It is recommended that beginners first use the default free models to ensure that the system runs smoothly, then optimize for faster response times.  
-To improve response speed, you can try replacing individual components. Below are the response time test results for each component (for reference only, not a guarantee):
-
-**LLM Performance Ranking:**
-
-| Module Name  | Average First Token Time | Average Total Response Time |
-|--------------|--------------------------|-----------------------------|
-| AliLLM       | 0.547s                   | 1.485s                      |
-| ChatGLMLLM   | 0.677s                   | 3.057s                      |
-| OllamaLLM    | 0.003s                   | 0.003s                      |
-
-**TTS Performance Ranking:**
-
-| Module Name                | Average Synthesis Time |
-|----------------------------|------------------------|
-| EdgeTTS                    | 1.019s                 |
-| DoubaoTTS                  | 0.503s                 |
-| CosyVoiceSiliconflow       | 3.732s                 |
-
-**Recommended Configuration Combination (Overall Response Speed):**
-
-| Combination Scheme                | Overall Score | LLM First Token | TTS Synthesis |
-|-----------------------------------|---------------|-----------------|---------------|
-| AliLLM + DoubaoTTS                | 0.539         | 0.547s          | 0.503s        |
-| AliLLM + EdgeTTS                  | 0.642         | 0.547s          | 1.019s        |
-| ChatGLMLLM + DoubaoTTS            | 0.642         | 0.677s          | 0.503s        |
-| ChatGLMLLM + EdgeTTS              | 0.745         | 0.677s          | 1.019s        |
-| AliLLM + CosyVoiceSiliconflow     | 1.184         | 0.547s          | 3.732s        |
-
-**Conclusion 🔍**
-
-_As of February 19, 2025, if my computer were located in Haizhu District, Guangzhou, Guangdong Province, and connected via China Unicom, I would prioritize using:_
-
-- **LLM:** `AliLLM`
-- **TTS:** `DoubaoTTS`
-
-### 7. For more questions, feel free to contact us for feedback 💬
-
-Our contact information is in [Baidu Netdisk](https://pan.baidu.com/s/1x6USjvP1nTRsZ45XlJu65Q)，The extraction code is`223y`。
+In fact, any VLLM that supports OpenAI interface calls can be integrated and used.
 
 ---
 
-## Acknowledgements 🙏
+### TTS Speech Synthesis
 
-- This project was inspired by the [Bailing Voice Dialogue Robot](https://github.com/wwbin2017/bailing) and implemented based on it.
-- Many thanks to [Tenclass](https://www.tenclass.com/) for providing detailed documentation support for the XiaoZhi communication protocol.
+| Usage Method | Supported Platforms | Free Platforms |
+|:---:|:---:|:---:|
+| Interface calls | EdgeTTS, Volcano Engine Doubao TTS, Tencent Cloud, Alibaba Cloud TTS, CosyVoiceSiliconflow, TTS302AI, CozeCnTTS, GizwitsTTS, ACGNTTS, OpenAITTS, Lingxi Streaming TTS | Lingxi Streaming TTS, EdgeTTS, CosyVoiceSiliconflow(partial) |
+| Local services | FishSpeech, GPT_SOVITS_V2, GPT_SOVITS_V3, MinimaxTTS | FishSpeech, GPT_SOVITS_V2, GPT_SOVITS_V3, MinimaxTTS |
+
+---
+
+### VAD Voice Activity Detection
+
+| Type | Platform Name | Usage Method | Pricing Model | Notes |
+|:---:|:---------:|:----:|:----:|:--:|
+| VAD | SileroVAD | Local use | Free | |
+
+---
+
+### ASR Speech Recognition
+
+| Usage Method | Supported Platforms | Free Platforms |
+|:---:|:---:|:---:|
+| Local use | FunASR, SherpaASR | FunASR, SherpaASR |
+| Interface calls | DoubaoASR, FunASRServer, TencentASR, AliyunASR | FunASRServer |
+
+---
+
+### Voiceprint Recognition
+
+| Usage Method | Supported Platforms | Free Platforms |
+|:---:|:---:|:---:|
+| Local use | 3D-Speaker | 3D-Speaker |
+
+---
+
+### Memory Storage
+
+| Type | Platform Name | Usage Method | Pricing Model | Notes |
+|:------:|:---------------:|:----:|:---------:|:--:|
+| Memory | mem0ai | Interface calls | 1000 times/month quota | |
+| Memory | mem_local_short | Local summarization | Free | |
+
+---
+
+### Intent Recognition
+
+| Type | Platform Name | Usage Method | Pricing Model | Notes |
+|:------:|:-------------:|:----:|:-------:|:---------------------:|
+| Intent | intent_llm | Interface calls | Based on LLM pricing | Recognizes intent through large models, strong generalization |
+| Intent | function_call | Interface calls | Based on LLM pricing | Completes intent through large model function calling, fast speed, good effect |
+
+---
+
+## Acknowledgments 🙏
+
+| Logo | Project/Company | Description |
+|:---:|:---:|:---|
+| <img src="./docs/images/logo_bailing.png" width="160"> | [Bailing Voice Dialogue Robot](https://github.com/wwbin2017/bailing) | This project is inspired by [Bailing Voice Dialogue Robot](https://github.com/wwbin2017/bailing) and implemented on its basis |
+| <img src="./docs/images/logo_tenclass.png" width="160"> | [Tenclass](https://www.tenclass.com/) | Thanks to [Tenclass](https://www.tenclass.com/) for formulating standard communication protocols, multi-device compatibility solutions, and high-concurrency scenario practice demonstrations for the Xiaozhi ecosystem; providing full-link technical documentation support for this project |
+| <img src="./docs/images/logo_xuanfeng.png" width="160"> | [Xuanfeng Technology](https://github.com/Eric0308) | Thanks to [Xuanfeng Technology](https://github.com/Eric0308) for contributing function calling framework, MCP communication protocol, and plugin-based calling mechanism implementation code. Through standardized instruction scheduling system and dynamic expansion capabilities, it significantly improves the interaction efficiency and functional extensibility of frontend devices (IoT) |
+| <img src="./docs/images/logo_huiyuan.png" width="160"> | [Huiyuan Design](http://ui.kwd988.net/) | Thanks to [Huiyuan Design](http://ui.kwd988.net/) for providing professional visual solutions for this project, using their design practical experience serving over a thousand enterprises to empower this project's product user experience |
+| <img src="./docs/images/logo_qinren.png" width="160"> | [Xi'an Qinren Information Technology](https://www.029app.com/) | Thanks to [Xi'an Qinren Information Technology](https://www.029app.com/) for deepening this project's visual system, ensuring consistency and extensibility of overall design style in multi-scenario applications |
+
 
 <a href="https://star-history.com/#xinnan-tech/xiaozhi-esp32-server&Date">
+
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date&theme=dark" />
    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date" />

@@ -14,8 +14,7 @@ class LLMProvider(LLMProviderBase):
         self.base_url = config.get("base_url", config.get("url"))  # 默认使用 base_url
         self.api_url = f"{self.base_url}/api/conversation/process"  # 拼接完整的 API URL
 
-    def response(self, session_id, dialogue):
-        print(dialogue)
+    def response(self, session_id, dialogue, **kwargs):
         try:
             # home assistant语音助手自带意图，无需使用xiaozhi ai自带的，只需要把用户说的话传递给home assistant即可
 
@@ -32,12 +31,12 @@ class LLMProvider(LLMProviderBase):
             payload = {
                 "text": input_text,
                 "agent_id": self.agent_id,
-                "conversation_id": session_id  # 使用 session_id 作为 conversation_id
+                "conversation_id": session_id,  # 使用 session_id 作为 conversation_id
             }
             # 设置请求头
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             }
 
             # 发起 POST 请求
@@ -48,7 +47,12 @@ class LLMProvider(LLMProviderBase):
 
             # 解析返回数据
             data = response.json()
-            speech = data.get("response", {}).get("speech", {}).get("plain", {}).get("speech", "")
+            speech = (
+                data.get("response", {})
+                .get("speech", {})
+                .get("plain", {})
+                .get("speech", "")
+            )
 
             # 返回生成的内容
             if speech:
@@ -60,3 +64,8 @@ class LLMProvider(LLMProviderBase):
             logger.bind(tag=TAG).error(f"HTTP 请求错误: {e}")
         except Exception as e:
             logger.bind(tag=TAG).error(f"生成响应时出错: {e}")
+
+    def response_with_functions(self, session_id, dialogue, functions=None):
+        logger.bind(tag=TAG).error(
+            f"homeassistant不支持（function call），建议使用其他意图识别"
+        )

@@ -1,7 +1,4 @@
-import os
-import uuid
 import requests
-from datetime import datetime
 from core.providers.tts.base import TTSProviderBase
 
 
@@ -10,17 +7,18 @@ class TTSProvider(TTSProviderBase):
         super().__init__(config, delete_audio_file)
         self.model = config.get("model")
         self.access_token = config.get("access_token")
-        self.voice = config.get("voice")
-        self.response_format = config.get("response_format")
+        if config.get("private_voice"):
+            self.voice = config.get("private_voice")
+        else:
+            self.voice = config.get("voice")
+        self.response_format = config.get("response_format", "mp3")
+        self.audio_file_type = config.get("response_format", "mp3")
         self.sample_rate = config.get("sample_rate")
-        self.speed = config.get("speed")
+        self.speed = float(config.get("speed", 1.0))
         self.gain = config.get("gain")
 
         self.host = "api.siliconflow.cn"
         self.api_url = f"https://{self.host}/v1/audio/speech"
-
-    def generate_filename(self, extension=".wav"):
-        return os.path.join(self.output_file, f"tts-{datetime.now().date()}@{uuid.uuid4().hex}{extension}")
 
     async def text_to_speak(self, text, output_file):
         request_json = {
@@ -31,9 +29,17 @@ class TTSProvider(TTSProviderBase):
         }
         headers = {
             "Authorization": f"Bearer {self.access_token}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
-        response = requests.request("POST", self.api_url, json=request_json, headers=headers)
-        data = response.content
-        file_to_save = open(output_file, "wb")
-        file_to_save.write(data)
+        try:
+            response = requests.request(
+                "POST", self.api_url, json=request_json, headers=headers
+            )
+            data = response.content
+            if output_file:
+                with open(output_file, "wb") as file_to_save:
+                    file_to_save.write(data)
+            else:
+                return data
+        except Exception as e:
+            raise Exception(f"{__name__} error: {e}")
